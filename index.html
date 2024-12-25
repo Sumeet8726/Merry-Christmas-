@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merry Christmas 🎄</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #001f3f, #0074D9);
+            color: #fff;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .wish-box {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .wish-box input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        .wish-box button {
+            width: 100%;
+            padding: 10px;
+            background: #FF4136;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .wish-box button:hover {
+            background: #FF851B;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            color: #fff;
+            font-size: 1em;
+            animation: fall 10s linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .link {
+            margin-top: 20px;
+            font-size: 1.2rem;
+        }
+
+        .link a {
+            color: #FFD700;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .link a:hover {
+            color: #FF4136;
+        }
+
+        .santa {
+            position: absolute;
+            bottom: 10%;
+            left: -20%;
+            width: 200px;
+            animation: santaMove 10s linear infinite;
+        }
+
+        @keyframes santaMove {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(120vw);
+            }
+        }
+
+        .upload-box {
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .upload-box input[type="file"] {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .upload-box button {
+            width: 100%;
+            padding: 10px;
+            background: #2ECC40;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .upload-box button:hover {
+            background: #01FF70;
+        }
+    </style>
+</head>
+<body>
+    <h1>Merry Christmas 🎅🎄</h1>
+    <h2>Warm blessings and apologies</h2>
+    <p>May your Christmas be filled with love, laughter, and cherished memories.</p>
+    <p>Sorry ji agar kuch galti ho gayi ho to.</p>
+
+    <div class="wish-box">
+        <h3>Make a Wish 🎁</h3>
+        <input type="text" id="wish" placeholder="Your wish here...">
+        <button onclick="sendWish()">Send Your Wish</button>
+    </div>
+
+    <div class="upload-box">
+        <form action="http://<your-public-ip>:3000/upload" method="POST" enctype="multipart/form-data">
+            <h3>Please ji ek pic dedo 📸</h3>
+            <input type="file" name="picture" accept="image/*" required>
+            <button type="submit">Upload</button>
+        </form>
+    </div>
+
+    <div class="link">
+       <a href="/merry-christmas" target="_self">Merry Christmas</a>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 Merry Christmas | All rights reserved.</p>
+    </div>
+
+    <img src="https://example.com/santa-reindeer.png" alt="Santa with reindeer" class="santa">
+
+    <script>
+        function createSnowflakes() {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+            snowflake.style.left = Math.random() * 100 + 'vw';
+            snowflake.style.animationDuration = Math.random() * 3 + 5 + 's';
+            snowflake.innerHTML = '&#10052;';
+            document.body.appendChild(snowflake);
+
+            setTimeout(() => {
+                snowflake.remove();
+            }, 8000);
+        }
+
+        setInterval(createSnowflakes, 200);
+
+        async function sendWish() {
+            const wish = document.getElementById('wish').value;
+            if (wish.trim() === '') {
+                alert('Please enter a wish!');
+                return;
+            }
+
+            const response = await fetch('http://<your-public-ip>:3000/api/wishes', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ wish }),
+            });
+
+            if (response.ok) {
+                alert('Your wish has been sent!');
+                document.getElementById('wish').value = '';
+            } else {
+                alert('Failed to send your wish.');
+            }
+        }
+    </script>
+</body>
+</html>
